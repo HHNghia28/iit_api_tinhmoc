@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "windows"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                 String     @id @default(uuid())
+  email              String     @unique
+  password           String
+  refreshToken       String?
+  expiryRefreshToken DateTime?  @default(now())
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime?  @updatedAt
+  isDeleted          Boolean    @default(false)
+  // Relationships
+  categoriesCreated  Category[] @relation("CreatedCategories")
+  categoriesUpdated  Category[] @relation("UpdatedCategories")
+  productsCreated    Product[]  @relation("CreatedProducts")
+  productsUpdated    Product[]  @relation("UpdatedProducts")
+}
+
+model Category {
+  id         String     @id @default(uuid())
+  name       String     @unique
+  parentId   String?
+  isDeleted  Boolean    @default(false)
+  createId   String
+  updateId   String?
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime?  @updatedAt
+  // Relationships
+  createBy   User       @relation("CreatedCategories", fields: [createId], references: [id])
+  updateBy   User?      @relation("UpdatedCategories", fields: [updateId], references: [id])
+  parentCat  Category?  @relation("Parent", fields: [parentId], references: [id])
+  products   Product[]
+  categories Category[] @relation("Parent")
+}
+
+model Product {
+  id             String          @id @default(uuid())
+  slug           String          @unique
+  title          String
+  normalizeTitle String?         @default("")
+  content        String
+  thumbnail      String?
+  price          String?         @default("")
+  salePercent    Int?            @default(0)
+  priority       Int?            @default(0)
+  categoryId     String
+  createId       String
+  updateId       String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime?       @updatedAt
+  isDeleted      Boolean         @default(false)
+  // Relationships
+  category       Category        @relation(fields: [categoryId], references: [id])
+  createBy       User            @relation("CreatedProducts", fields: [createId], references: [id])
+  updateBy       User?           @relation("UpdatedProducts", fields: [updateId], references: [id])
+  images         ProductImages[]
+}
+
+model ProductImages {
+  id        String  @id @default(uuid())
+  productId String
+  url       String
+  isDeleted Boolean @default(false)
+  // Relationships
+  product   Product @relation(fields: [productId], references: [id])
+}
