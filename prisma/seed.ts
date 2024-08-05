@@ -91,7 +91,8 @@ async function main() {
       title: 'Cửa cái',
       normalizeTitle: 'cua cai',
       content: 'Của cái',
-      thumbnail: '/uploads/products/iit-001.png',
+      thumbnail:
+        'http://192.168.1.18:3000/uploads/products/file-1722227013968-42799818.png',
       price: '150000',
       salePercent: 5,
       categoryId: subCategories[2].id,
@@ -103,7 +104,8 @@ async function main() {
       title: 'Cửa sổ',
       normalizeTitle: 'cua so',
       content: 'Của sổ',
-      thumbnail: '/uploads/products/iit-002.png',
+      thumbnail:
+        'http://192.168.1.18:3000/uploads/products/file-1722227013968-42799818.png',
       price: '150000',
       salePercent: 0,
       categoryId: subCategories[3].id,
@@ -115,7 +117,8 @@ async function main() {
       title: 'Bàn 01',
       normalizeTitle: 'ban 01',
       content: 'Bàn 01',
-      thumbnail: '/uploads/products/iit-003.png',
+      thumbnail:
+        'http://192.168.1.18:3000/uploads/products/file-1722227013968-42799818.png',
       price: '150000',
       salePercent: 0,
       categoryId: subCategories[0].id,
@@ -127,7 +130,8 @@ async function main() {
       title: 'Kệ 01',
       normalizeTitle: 'ke 01',
       content: 'Kệ 01',
-      thumbnail: '/uploads/products/iit-004.png',
+      thumbnail:
+        'http://192.168.1.18:3000/uploads/products/file-1722227013968-42799818.png',
       price: '150000',
       salePercent: 0,
       categoryId: subCategories[4].id,

@@ -25,6 +25,9 @@ export class ProductController {
     @Query('pageSize') pageSize: number = 10,
     @Query('categories') categoryName?: string[],
   ) {
+    if (typeof categoryName === 'string') {
+      categoryName = [categoryName];
+    }
     return await this.productService.findAll({
       search,
       sort,

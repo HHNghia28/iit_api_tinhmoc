@@ -29,6 +29,35 @@ export class ProductService {
     }
 
     if (categoryName.length > 0) {
+      console.log(categoryName);
+      for (const category of categoryName) {
+        const existCategory = await this.prisma.category.findFirst({
+          where: {
+            name: { equals: category, mode: 'insensitive' },
+          },
+        });
+
+        if (existCategory === null) {
+          continue;
+        }
+
+        const categories = await this.prisma.category.findMany({
+          where: {
+            parentId: existCategory.id,
+          },
+          select: {
+            name: true,
+          },
+        });
+
+        const subCategory = categories.map((item) => item.name);
+
+        if (subCategory.length > 0) {
+          categoryName.filter((item) => item != category);
+          categoryName = categoryName.concat(subCategory);
+        }
+      }
+
       whereConditions.category = {
         AND: [],
       };
