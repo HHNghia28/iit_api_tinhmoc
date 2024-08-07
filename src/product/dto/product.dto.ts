@@ -19,6 +19,10 @@ export class CreateProductDto {
 
   @IsOptional()
   @IsString()
+  link3d: string;
+
+  @IsOptional()
+  @IsString()
   price: string;
 
   @IsOptional()
@@ -62,6 +66,10 @@ export class UpdateProductDto {
   @IsOptional()
   @IsString()
   thumbnail: string;
+
+  @IsOptional()
+  @IsString()
+  link3d: string;
 
   @IsOptional()
   @IsString()

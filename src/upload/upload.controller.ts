@@ -48,6 +48,33 @@ export class UploadController {
     return await this.productService.updateThumbnail(body.id, filePath);
   }
 
+  @Post('product-link3d')
+  @UseJwtGuard()
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './uploads/products',
+        filename: (req, file, callback) => {
+          const uniqueSuffix =
+            Date.now() + '-' + Math.round(Math.random() * 1e9);
+          const ext = extname(file.originalname);
+          const filename = `${file.fieldname}-${uniqueSuffix}${ext}`;
+          callback(null, filename);
+        },
+      }),
+    }),
+  )
+  async uploadProductLink3d(
+    @UploadedFile() file: Express.Multer.File,
+    @Body() body: { id: string },
+  ) {
+    const filePath = prependHostAndPort(
+      this.configService,
+      `/uploads/products/${file.filename}`,
+    );
+    return await this.productService.updateLink3d(body.id, filePath);
+  }
+
   @Post('product-images')
   @UseJwtGuard()
   @UseInterceptors(

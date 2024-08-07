@@ -243,6 +243,14 @@ export class ProductService {
     return product;
   }
 
+  async updateLink3d(id: string, link3d: string) {
+    const product = await this.prisma.product.update({
+      where: { id },
+      data: { link3d },
+    });
+    return product;
+  }
+
   async updateProductImage(request: UpdateImageDto) {
     const { id, thumbnails, oldUrl } = request;
 

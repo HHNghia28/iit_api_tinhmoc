@@ -51,6 +51,7 @@ model Product {
   normalizeTitle String?         @default("")
   content        String
   thumbnail      String?
+  link3d         String?
   price          String?         @default("")
   salePercent    Int?            @default(0)
   priority       Int?            @default(0)
